@@ -1,6 +1,6 @@
 <div align="center">
 
-# 星野云递 · XingYe Sync
+# 星野 · XingYe
 
 **一站式多平台自媒体矩阵自动发布系统** · 一个界面，把内容分发到全网
 
