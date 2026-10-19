@@ -1,0 +1,91 @@
+appId: com.xingye.mediapublisher
+productName: 星野自媒体矩阵助手
+copyright: Copyright © 2026 大效果视觉
+
+directories:
+  buildResources: build
+  output: release/${version}
+
+files:
+  - dist/**/*
+  - package.json
+
+asarUnpack:
+  - "**/*.node"
+
+extraResources:
+  - from: runtime-seed
+    to: runtime-seed
+    filter:
+      - "**/*"
+  - from: ../backend
+    to: app/backend
+    filter:
+      - "**/*"
+      - "!**/__pycache__/**"
+      - "!**/*.pyc"
+      - "!tests/**"
+      - "!test_*.py"
+      - "!.pytest_cache/**"
+  - from: ../backend-mcp/dist
+    to: app/backend-mcp/dist
+    filter:
+      - "**/*"
+  - from: ../backend-mcp/node_modules
+    to: app/backend-mcp/node_modules
+    filter:
+      - "**/*"
+  - from: ../backend-mcp/package.json
+    to: app/backend-mcp/package.json
+  - from: ../frontend/dist
+    to: app/frontend/dist
+    filter:
+      - "**/*"
+  - from: ../data/utils
+    to: app/data/utils
+    filter:
+      - "**/*"
+  - from: ../changelog
+    to: app/changelog
+    filter:
+      - "**/*"
+  - from: ../versions
+    to: app/versions
+
+afterPack: ./after-pack.js
+
+mac:
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  category: public.app-category.productivity
+  icon: build/icon.icns
+  hardenedRuntime: false
+  gatekeeperAssess: false
+  identity: null
+
+dmg:
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+  signAndEditExecutable: true
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 星野自媒体矩阵助手
+  artifactName: "${productName}-Setup-${version}.${ext}"
